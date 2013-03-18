@@ -22,6 +22,8 @@
         <javac srcdir="${src.dir}"
                destdir="${build.dir}"
                debug="on"
+               source="1.6"
+               target="1.6"
                excludes=".svn">
             <classpath refid="classpath.path"/>
         </javac>
