@@ -31,15 +31,15 @@ import java.util.Set;
 
 /**
  * Beginnings of an optimization to specialize the initial module at the cost of
- * increasing code in later modules. This is still very experimental.
+ * increasing code in later processedModules. This is still very experimental.
  *
  * High-level overview:
  *
  * This optimization replaces functions in the initial module with specialized
  * versions that are only safe in the initial module. The original, general,
- * versions of the functions are "fixed up" in later modules. This optimization
+ * versions of the functions are "fixed up" in later processedModules. This optimization
  * can shrink the initial module significantly but the fixup code in later
- * modules increases overall code size.
+ * processedModules increases overall code size.
  *
  * Implementation approach:
  *
@@ -363,7 +363,7 @@ public class SpecializeModule implements CompilerPass {
   }
 
   /**
-   * Returns a list of modules that directly depend on the given module.
+   * Returns a list of processedModules that directly depend on the given module.
    *
    * This probably deserves to be in JSModuleGraph.
    */
@@ -487,7 +487,7 @@ public class SpecializeModule implements CompilerPass {
 
     /**
      * Generates a definition of the original function that can be added as
-     * a fixup in the modules that directly depend on the specialized module.
+     * a fixup in the processedModules that directly depend on the specialized module.
      *
      * <PRE>
      * The trick here is that even if the original function is declared as:
@@ -564,7 +564,7 @@ public class SpecializeModule implements CompilerPass {
 
     /**
      * The functions that the pass has specialized. These functions will
-     * be fixed up in non-specialized modules to their more general versions.
+     * be fixed up in non-specialized processedModules to their more general versions.
      *
      * This field is also used to determine whether specialization is enabled.
      * If not null, specialization is enabled, otherwise it is disabled.
@@ -573,7 +573,7 @@ public class SpecializeModule implements CompilerPass {
 
     /**
      * The functions that the pass has removed. These functions will be
-     * redefined in non-specialized modules.
+     * redefined in non-specialized processedModules.
      */
     private Set<Node> removedFunctions;
 

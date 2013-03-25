@@ -84,7 +84,7 @@ class AliasStrings extends AbstractPostOrderCallback
    * Creates an instance.
    *
    * @param compiler The compiler
-   * @param moduleGraph The module graph, or null if there are no modules
+   * @param moduleGraph The module graph, or null if there are no processedModules
    * @param strings Set of strings to be aliased. If null, all strings except
    *     'undefined' will be aliased.
    * @param blacklistRegex The regex to blacklist words in aliasing strings.
@@ -182,7 +182,7 @@ class AliasStrings extends AbstractPostOrderCallback
               module != info.moduleToContainDecl &&
               !moduleGraph.dependsOn(module, info.moduleToContainDecl)) {
             // We need to declare this string in the deepest module in the
-            // module dependency graph that both of these modules depend on.
+            // module dependency graph that both of these processedModules depend on.
             module = moduleGraph.getDeepestCommonDependency(
                 module, info.moduleToContainDecl);
             Node varParent = moduleVarParentMap.get(module);

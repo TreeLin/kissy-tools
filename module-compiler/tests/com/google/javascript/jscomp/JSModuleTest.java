@@ -87,7 +87,7 @@ public class JSModuleTest extends TestCase {
         JSSourceFile.fromCode("d.js",
             "goog.provide('d')"));
 
-    // Independent modules.
+    // Independent processedModules.
     CompilerInput e = new CompilerInput(
         JSSourceFile.fromCode("e.js",
             "goog.provide('e')"));

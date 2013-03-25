@@ -120,7 +120,7 @@ abstract class AbstractCommandLineRunner<A extends Compiler,
    * all outputs will be blackholed.
    * @param externsSupplier A provider for externs.
    * @param inputsSupplier A provider for source inputs.
-   * @param modulesSupplier A provider for modules. Only one of inputsSupplier
+   * @param modulesSupplier A provider for processedModules. Only one of inputsSupplier
    *     and modulesSupplier may be non-null.
    * @param exitCodeReceiver A receiver for the status code that would
    *     have been passed to System.exit in non-test mode.
@@ -406,7 +406,7 @@ abstract class AbstractCommandLineRunner<A extends Compiler,
         numJsFiles = -1;
       }
 
-      // We will allow modules of zero input.
+      // We will allow processedModules of zero input.
       if (numJsFiles < 0) {
         throw new FlagUsageException("Invalid js file count '" + parts[1]
             + "' for module: " + name);
@@ -433,7 +433,7 @@ abstract class AbstractCommandLineRunner<A extends Compiler,
             if (other == null) {
               throw new FlagUsageException("Module '" + name
                   + "' depends on unknown module '" + dep
-                  + "'. Be sure to list modules in dependency order.");
+                  + "'. Be sure to list processedModules in dependency order.");
             }
             module.addDependency(other);
           }
@@ -456,7 +456,7 @@ abstract class AbstractCommandLineRunner<A extends Compiler,
    *
    * @param specs A list of module wrapper specifications, not null. The spec
    *        format is: <code>name:wrapper</code>. Wrappers.
-   * @param modules The JS modules whose wrappers are specified
+   * @param modules The JS processedModules whose wrappers are specified
    * @return A map from module name to module wrapper. Modules with no wrapper
    *         will have the empty string as their value in this map.
    */
@@ -1079,7 +1079,7 @@ abstract class AbstractCommandLineRunner<A extends Compiler,
   }
 
   /**
-   * Prints a set of modules to the manifest file.
+   * Prints a set of processedModules to the manifest file.
    */
   @VisibleForTesting
   void printModuleGraphManifestTo(
@@ -1399,7 +1399,7 @@ abstract class AbstractCommandLineRunner<A extends Compiler,
     private String moduleOutputPathPrefix = "";
 
     /**
-     * Prefix for filenames of compiled js modules.
+     * Prefix for filenames of compiled js processedModules.
      * <module-name>.js will be appended to this prefix. Directories
      * will be created as needed. Use with --module
      */

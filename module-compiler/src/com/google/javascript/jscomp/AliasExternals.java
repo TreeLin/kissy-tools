@@ -121,7 +121,7 @@ class AliasExternals implements CompilerPass {
   /** Root in parse tree for adding generated nodes */
   private Node defaultRoot;
 
-  /** Root in each module for adding generated nodes, if using modules */
+  /** Root in each module for adding generated nodes, if using processedModules */
   private Map<JSModule, Node> moduleRoots;
 
   /**
@@ -149,7 +149,7 @@ class AliasExternals implements CompilerPass {
    * Creates an instance.
    *
    * @param compiler The Compiler
-   * @param moduleGraph The graph of input modules. May be null. If given, we'll
+   * @param moduleGraph The graph of input processedModules. May be null. If given, we'll
    *     try to push aliased externs into the deepest possible module.
    */
   AliasExternals(AbstractCompiler compiler, JSModuleGraph moduleGraph) {
@@ -160,7 +160,7 @@ class AliasExternals implements CompilerPass {
    * Creates an instance.
    *
    * @param compiler The Compiler
-   * @param moduleGraph The graph of input modules. May be null. If given, we'll
+   * @param moduleGraph The graph of input processedModules. May be null. If given, we'll
    *     try to push aliased externs into the deepest possible module.
    * @param unaliasableGlobals Comma-separated list of additional globals that
    *     cannot be aliased since they may be undefined or can cause errors

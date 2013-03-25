@@ -245,8 +245,8 @@ public class RenamePropertiesTest extends CompilerTestCase {
     // Note that properties that occur most often globally get the earliest
     // names. The "getC" property, which doesn't occur until module 3, is
     // renamed to an earlier name in the alphabet than "woo", which appears
-    // in module 2, because "getC" occurs more total times across all modules.
-    // Might be better to give early modules the shortest names, but this is
+    // in module 2, because "getC" occurs more total times across all processedModules.
+    // Might be better to give early processedModules the shortest names, but this is
     // how the pass currently works.
     assertEquals("function Car(){}Car.prototype.d=function(x){};" +
                  "var noo;noo.d(noo);noo.h=noo;noo.e=noo;",

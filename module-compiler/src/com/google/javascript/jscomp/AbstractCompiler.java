@@ -57,7 +57,7 @@ public abstract class AbstractCompiler implements SourceExcerptProvider {
 
   /**
    * Gets the module graph. May return null if there aren't at least two
-   * modules.
+   * processedModules.
    */
   abstract JSModuleGraph getModuleGraph();
 
@@ -125,7 +125,7 @@ public abstract class AbstractCompiler implements SourceExcerptProvider {
    * non-empty module that {@code module} depends on (the deepest one possible).
    *
    * @param module A module. If null, will return the first SCRIPT node of all
-   *     modules.
+   *     processedModules.
    * @return A SCRIPT node (never null).
    */
   abstract Node getNodeForCodeInsertion(JSModule module);

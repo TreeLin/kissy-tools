@@ -1644,7 +1644,7 @@ public class InlineFunctionsTest extends CompilerTestCase {
              "JSCompiler_renameProperty('foo')");
   }
 
-  // Inline a single reference function into deeper modules
+  // Inline a single reference function into deeper processedModules
   public void testCrossModuleInlining1() {
     test(createModuleChain(
              // m1
@@ -1661,7 +1661,7 @@ public class InlineFunctionsTest extends CompilerTestCase {
         );
   }
 
-  // Inline a single reference function into shallow modules, only if it
+  // Inline a single reference function into shallow processedModules, only if it
   // is cheaper than the call itself.
   public void testCrossModuleInlining2() {
     testSame(createModuleChain(
@@ -1687,7 +1687,7 @@ public class InlineFunctionsTest extends CompilerTestCase {
         );
   }
 
-  // Inline a multi-reference functions into shallow modules, only if it
+  // Inline a multi-reference functions into shallow processedModules, only if it
   // is cheaper than the call itself.
   public void testCrossModuleInlining3() {
     testSame(createModuleChain(

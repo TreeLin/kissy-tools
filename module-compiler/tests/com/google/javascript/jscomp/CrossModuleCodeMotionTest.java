@@ -238,7 +238,7 @@ public class CrossModuleCodeMotionTest extends CompilerTestCase {
   }
 
   public void testFunctionNonMovement2() {
-    // A generic case where 2 modules depend on the first one. But it's the
+    // A generic case where 2 processedModules depend on the first one. But it's the
     // common ancestor, so we can't move.
     testSame(createModuleStar(
       // m1
@@ -720,11 +720,11 @@ public class CrossModuleCodeMotionTest extends CompilerTestCase {
 
   public void testEmptyModule() {
     // When the dest module is empty, it might try to move the code to the
-    // one of the modules that the empty module depends on. In some cases
+    // one of the processedModules that the empty module depends on. In some cases
     // this might ended up to be the same module as the definition of the code.
     // When that happens, CrossMooduleCodeMotion might report a code change
     // while nothing is moved. This should not be a problem if we know all
-    // modules are non-empty.
+    // processedModules are non-empty.
     JSModule m1 = new JSModule("m1");
     m1.add(JSSourceFile.fromCode("m1", "function x() {}"));
 

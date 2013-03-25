@@ -207,7 +207,7 @@ public class CommandLineRunner extends
     private List<String> module_wrapper = Lists.newArrayList();
 
     @Option(name = "--module_output_path_prefix",
-        usage = "Prefix for filenames of compiled js modules. "
+        usage = "Prefix for filenames of compiled js processedModules. "
         + "<module-name>.js will be appended to this prefix. Directories "
         + "will be created as needed. Use with --module")
     private String module_output_path_prefix = "./";

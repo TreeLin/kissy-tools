@@ -71,12 +71,12 @@ class CrossModuleCodeMotion extends AbstractPostOrderCallback
 
   @Override
   public void process(Node externs, Node root) {
-    logger.info("Moving functions + variable into deeper modules");
+    logger.info("Moving functions + variable into deeper processedModules");
 
-    // If there are <2 modules, then we will never move anything, so we're done
+    // If there are <2 processedModules, then we will never move anything, so we're done
     if (graph != null && graph.getModuleCount() > 1) {
 
-      // Traverse the tree and find the modules where a var is declared + used
+      // Traverse the tree and find the processedModules where a var is declared + used
       NodeTraversal.traverse(compiler, root, this);
 
       // Move the functions + variables to a deeper module [if possible]
@@ -307,7 +307,7 @@ class CrossModuleCodeMotion extends AbstractPostOrderCallback
 
   /**
    * Determines whether the given NAME node belongs to a delcaration that
-   * can be moved across modules. If it is, registers it properly.
+   * can be moved across processedModules. If it is, registers it properly.
    *
    * There are four types of movable declarations:
    * 1) var NAME = [movable object];
@@ -383,7 +383,7 @@ class CrossModuleCodeMotion extends AbstractPostOrderCallback
   }
 
   /**
-   * Determines whether the given value is eligible to be moved across modules.
+   * Determines whether the given value is eligible to be moved across processedModules.
    */
   private boolean canMoveValue(Node n) {
     // the value is only movable if it's

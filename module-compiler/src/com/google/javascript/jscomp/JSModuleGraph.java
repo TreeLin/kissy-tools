@@ -51,8 +51,8 @@ public class JSModuleGraph {
   private Set<JSModule> modules;
 
   /**
-   * Lists of modules at each depth. <code>modulesByDepth.get(3)</code> is a
-   * list of the modules at depth 3, for example.
+   * Lists of processedModules at each depth. <code>modulesByDepth.get(3)</code> is a
+   * list of the processedModules at depth 3, for example.
    */
   private List<List<JSModule>> modulesByDepth;
 
@@ -71,14 +71,14 @@ public class JSModuleGraph {
   private Map<JSModule, Set<JSModule>> dependencyMap = Maps.newHashMap();
 
   /**
-   * Creates a module graph from a list of modules in dependency order.
+   * Creates a module graph from a list of processedModules in dependency order.
    */
   public JSModuleGraph(JSModule[] modulesInDepOrder) {
     this(Lists.<JSModule>newArrayList(modulesInDepOrder));
   }
 
   /**
-   * Creates a module graph from a list of modules in dependency order.
+   * Creates a module graph from a list of processedModules in dependency order.
    */
   public JSModuleGraph(List<JSModule> modulesInDepOrder) {
     modules = Sets.newHashSetWithExpectedSize(modulesInDepOrder.size());
@@ -107,14 +107,14 @@ public class JSModuleGraph {
   }
 
   /**
-   * Gets an iterable over all modules.
+   * Gets an iterable over all processedModules.
    */
   Iterable<JSModule> getAllModules() {
     return modules;
   }
 
   /**
-   * Gets all the modules in dependency order. Modules with the same depth
+   * Gets all the processedModules in dependency order. Modules with the same depth
    * will be ordered deterministically.
    */
   Iterable<JSModule> getAllModulesInDependencyOrder() {
@@ -124,7 +124,7 @@ public class JSModuleGraph {
   }
 
   /**
-   * Gets the total number of modules.
+   * Gets the total number of processedModules.
    */
   int getModuleCount() {
     return modules.size();
@@ -152,8 +152,8 @@ public class JSModuleGraph {
   }
 
   /**
-   * Finds the deepest common dependency of two modules, not including the two
-   * modules themselves.
+   * Finds the deepest common dependency of two processedModules, not including the two
+   * processedModules themselves.
    *
    * @param m1 A module in this graph
    * @param m2 A module in this graph
@@ -167,8 +167,8 @@ public class JSModuleGraph {
     // smaller depth than either m1 or m2.
     for (int depth = Math.min(m1Depth, m2Depth) - 1; depth >= 0; depth--) {
       List<JSModule> modulesAtDepth = modulesByDepth.get(depth);
-      // Look at the modules at this depth in reverse order, so that we use the
-      // original ordering of the modules to break ties (later meaning deeper).
+      // Look at the processedModules at this depth in reverse order, so that we use the
+      // original ordering of the processedModules to break ties (later meaning deeper).
       for (int i = modulesAtDepth.size() - 1; i >= 0; i--) {
         JSModule m = modulesAtDepth.get(i);
         if (dependsOn(m1, m) && dependsOn(m2, m)) {
@@ -180,8 +180,8 @@ public class JSModuleGraph {
   }
 
   /**
-   * Finds the deepest common dependency of two modules, including the
-   * modules themselves.
+   * Finds the deepest common dependency of two processedModules, including the
+   * processedModules themselves.
    *
    * @param m1 A module in this graph
    * @param m2 A module in this graph
@@ -199,7 +199,7 @@ public class JSModuleGraph {
     return getDeepestCommonDependency(m1, m2);
   }
 
-  /** Returns the deepest common dependency of the given modules. */
+  /** Returns the deepest common dependency of the given processedModules. */
   public JSModule getDeepestCommonDependencyInclusive(
       Collection<JSModule> modules) {
     Iterator<JSModule> iter = modules.iterator();
@@ -241,9 +241,9 @@ public class JSModuleGraph {
 
   /**
    * Replaces any files that are found multiple times with a single instance in
-   * the closest parent module that is common to all modules where it appears.
+   * the closest parent module that is common to all processedModules where it appears.
    *
-   * JSCompiler normally errors if you attempt to compile modules containing the
+   * JSCompiler normally errors if you attempt to compile processedModules containing the
    * same file.  This method can be used to remove duplicates before compiling
    * to avoid such an error.
    */
@@ -273,7 +273,7 @@ public class JSModuleGraph {
   }
 
   /**
-   * Sort the sources of modules in dependency-order.
+   * Sort the sources of processedModules in dependency-order.
    *
    * If a source file provides a symbol that is not required, then that
    * file will be removed from the compilation. If a source file provides
@@ -302,7 +302,7 @@ public class JSModuleGraph {
       entryPointInputs.add(sorter.getInputProviding(entryPoint));
     }
 
-    // The order of inputs, sorted independently of modules.
+    // The order of inputs, sorted independently of processedModules.
     List<CompilerInput> absoluteOrder = sorter.getSortedDependenciesOf(inputs);
 
     // Figure out which sources *must* be in each module.
@@ -314,7 +314,7 @@ public class JSModuleGraph {
       entryPointInputsPerModule.put(module, input);
     }
 
-    // Clear the modules of their inputs. This also nulls out
+    // Clear the processedModules of their inputs. This also nulls out
     // the input's reference to its module.
     for (JSModule module : getAllModules()) {
       module.removeAll();
@@ -338,8 +338,8 @@ public class JSModuleGraph {
       }
     }
 
-    // All the inputs are pointing to the modules that own them. Yeah!
-    // Update the modules to reflect this.
+    // All the inputs are pointing to the processedModules that own them. Yeah!
+    // Update the processedModules to reflect this.
     for (CompilerInput input : absoluteOrder) {
       JSModule module = input.getModule();
       if (module != null) {
@@ -387,7 +387,7 @@ public class JSModuleGraph {
   }
 
   /*
-   * Exception class for declaring when the modules being fed into a
+   * Exception class for declaring when the processedModules being fed into a
    * JSModuleGraph as input aren't in dependence order, and so can't be
    * processed for caching of various dependency-related queries.
    */

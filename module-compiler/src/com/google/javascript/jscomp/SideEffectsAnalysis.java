@@ -458,8 +458,8 @@ import java.util.Set;
   }
   
   /**
-   * An environment for motion between modules. Given a
-   * module graph and as well as source and destination nodes and modules,
+   * An environment for motion between processedModules. Given a
+   * module graph and as well as source and destination nodes and processedModules,
    * instances of this object will calculate the environment between the source
    * and destination.
    */

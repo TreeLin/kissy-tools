@@ -1517,7 +1517,7 @@ public class DefaultPassConfig extends PassConfig {
   };
 
   /**
-   * Specialize the initial module at the cost of later modules
+   * Specialize the initial module at the cost of later processedModules
    */
   private PassFactory specializeInitialModule =
       new PassFactory("specializeInitialModule", true) {

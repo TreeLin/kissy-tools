@@ -66,7 +66,7 @@ class AnalyzePrototypeProperties implements CompilerPass {
       ImmutableSet.of("length", "toString", "valueOf");
 
   // A graph where the nodes are property names or variable names,
-  // and the edges signify the modules where the property is referenced.
+  // and the edges signify the processedModules where the property is referenced.
   // For example, if we had the code:
   //
   // Foo.prototype.bar = function(x) { x.baz(); }; // in module 2.;

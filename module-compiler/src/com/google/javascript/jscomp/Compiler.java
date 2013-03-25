@@ -80,11 +80,11 @@ public class Compiler extends AbstractCompiler {
   // The externs inputs
   private List<CompilerInput> externs;
 
-  // The JS source modules
+  // The JS source processedModules
   private List<JSModule> modules;
 
-  // The graph of the JS source modules. Must be null if there are less than
-  // 2 modules, because we use this as a signal for which passes to run.
+  // The graph of the JS source processedModules. Must be null if there are less than
+  // 2 processedModules, because we use this as a signal for which passes to run.
   private JSModuleGraph moduleGraph;
 
   // The JS source inputs
@@ -280,7 +280,7 @@ public class Compiler extends AbstractCompiler {
 
   /**
    * Initializes the instance state needed for a compile job if the sources
-   * are in modules.
+   * are in processedModules.
    */
   public void init(JSSourceFile[] externs, JSModule[] modules,
       CompilerOptions options) {
@@ -290,7 +290,7 @@ public class Compiler extends AbstractCompiler {
 
   /**
    * Initializes the instance state needed for a compile job if the sources
-   * are in modules.
+   * are in processedModules.
    */
   public void initModules(
       List<JSSourceFile> externs, List<JSModule> modules,
@@ -367,7 +367,7 @@ public class Compiler extends AbstractCompiler {
   }
 
   /**
-   * Fill any empty modules with a place holder file. It makes any cross module
+   * Fill any empty processedModules with a place holder file. It makes any cross module
    * motion easier.
    */
   private static void fillEmptyModules(List<JSModule> modules) {
@@ -379,7 +379,7 @@ public class Compiler extends AbstractCompiler {
   }
 
   /**
-   * Rebuilds the internal list of inputs by iterating over all modules.
+   * Rebuilds the internal list of inputs by iterating over all processedModules.
    * This is necessary if inputs have been added to or removed from a module
    * after the {@link #init(JSSourceFile[], JSModule[], CompilerOptions)} call.
    */
@@ -488,7 +488,7 @@ public class Compiler extends AbstractCompiler {
   }
 
   /**
-   * Compiles a list of modules.
+   * Compiles a list of processedModules.
    */
   public Result compile(JSSourceFile[] externs,
                         JSModule[] modules,
@@ -499,7 +499,7 @@ public class Compiler extends AbstractCompiler {
   }
 
   /**
-   * Compiles a list of modules.
+   * Compiles a list of processedModules.
    */
   public Result compileModules(List<JSSourceFile> externs,
       List<JSModule> modules, CompilerOptions options) {
@@ -1101,7 +1101,7 @@ public class Compiler extends AbstractCompiler {
         }
       }
 
-      // Check if inputs need to be rebuilt from modules.
+      // Check if inputs need to be rebuilt from processedModules.
       boolean staleInputs = false;
       for (CompilerInput input : inputs) {
         Node n = input.getAstRoot(this);
@@ -1857,7 +1857,7 @@ public class Compiler extends AbstractCompiler {
   }
 
   /**
-   * Returns the current internal state, excluding the input files and modules.
+   * Returns the current internal state, excluding the input files and processedModules.
    */
   public IntermediateState getState() {
     IntermediateState state = new IntermediateState();

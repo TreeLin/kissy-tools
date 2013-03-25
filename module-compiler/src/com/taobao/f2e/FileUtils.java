@@ -20,7 +20,7 @@ public class FileUtils {
                 sb.append("\n");
             }
         } catch (FileNotFoundException e) {
-            System.out.println("warning : file not found : " + path);
+            System.out.println("warning: file not found: " + path);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -47,8 +47,8 @@ public class FileUtils {
     }
 
     /**
-     * @param path
-     * @return
+     * @param {String} path
+     * @return {String} escaped path
      */
     public static String escapePath(String path) {
         return path.replaceAll("\\\\", "/");

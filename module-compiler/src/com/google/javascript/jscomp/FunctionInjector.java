@@ -704,7 +704,7 @@ class FunctionInjector {
           // Calculate the cost as if the function were non-removable,
           // if it still lowers the cost inline it.
           isRemovable = false;
-          checkModules = false;  // no need to check additional modules.
+          checkModules = false;  // no need to check additional processedModules.
         }
       }
     }

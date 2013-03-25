@@ -3,8 +3,6 @@ package com.taobao.f2e;
 import com.google.javascript.rhino.Node;
 import com.google.javascript.rhino.Token;
 
-import java.io.File;
-
 /**
  * KISSY Module Format.
  *
@@ -20,10 +18,6 @@ public class Module {
      * encoding of module 's code file.
      */
     private String encoding = "utf-8";
-    /**
-     * module package 's file path.
-     */
-    private String packageBase;
     /**
      * module name.
      */
@@ -41,21 +35,9 @@ public class Module {
      */
     private String[] requires = null;
     /**
-     * whether current module definition has module name.
-     */
-    private boolean withModuleName = true;
-    /**
      * module code 's ast root.
      */
     private Node astRoot = null;
-
-    public boolean isModuleExists() {
-        return new File(fullpath).exists();
-    }
-
-    public void setAstRoot(Node root) {
-        this.astRoot = root;
-    }
 
     public Node getAstRoot() {
         if (astRoot != null) {
@@ -69,10 +51,6 @@ public class Module {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public String getContent() {
@@ -117,20 +95,12 @@ public class Module {
         this.code = code;
     }
 
-    public String getFullpath() {
-        return fullpath;
-    }
-
     public void setFullpath(String fullpath) {
         this.fullpath = fullpath;
     }
 
     public void setEncoding(String encoding) {
         this.encoding = encoding;
-    }
-
-    public void setPackageBase(String packageBase) {
-        this.packageBase = packageBase;
     }
 
     public String getName() {

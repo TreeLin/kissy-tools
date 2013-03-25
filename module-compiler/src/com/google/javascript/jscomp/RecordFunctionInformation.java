@@ -25,7 +25,7 @@ import java.util.Comparator;
 import java.util.TreeSet;
 
 /**
- * Records information about functions and modules.
+ * Records information about functions and processedModules.
  *
  */
 class RecordFunctionInformation extends AbstractPostOrderCallback

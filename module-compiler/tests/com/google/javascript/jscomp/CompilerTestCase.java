@@ -905,7 +905,7 @@ public abstract class CompilerTestCase extends TestCase  {
   }
 
   /**
-   * Generates a list of modules from a list of inputs, such that each module
+   * Generates a list of processedModules from a list of inputs, such that each module
    * depends on the module before it.
    */
   static JSModule[] createModuleChain(String... inputs) {
@@ -917,7 +917,7 @@ public abstract class CompilerTestCase extends TestCase  {
   }
 
   /**
-   * Generates a list of modules from a list of inputs, such that each module
+   * Generates a list of processedModules from a list of inputs, such that each module
    * depends on the first module.
    */
   static JSModule[] createModuleStar(String... inputs) {
@@ -929,9 +929,9 @@ public abstract class CompilerTestCase extends TestCase  {
   }
 
   /**
-   * Generates a list of modules from a list of inputs, such that modules
+   * Generates a list of processedModules from a list of inputs, such that processedModules
    * form a bush formation. In a bush formation, module 2 depends
-   * on module 1, and all other modules depend on module 2.
+   * on module 1, and all other processedModules depend on module 2.
    */
   static JSModule[] createModuleBush(String ... inputs) {
     Preconditions.checkState(inputs.length > 2);
@@ -943,9 +943,9 @@ public abstract class CompilerTestCase extends TestCase  {
   }
 
   /**
-   * Generates a list of modules from a list of inputs, such that modules
+   * Generates a list of processedModules from a list of inputs, such that processedModules
    * form a tree formation. In a tree formation, module N depends on
-   * module `floor(N/2)`, So the modules form a balanced binary tree.
+   * module `floor(N/2)`, So the processedModules form a balanced binary tree.
    */
   static JSModule[] createModuleTree(String ... inputs) {
     JSModule[] modules = createModules(inputs);
@@ -956,8 +956,8 @@ public abstract class CompilerTestCase extends TestCase  {
   }
 
   /**
-   * Generates a list of modules from a list of inputs. Does not generate any
-   * dependencies between the modules.
+   * Generates a list of processedModules from a list of inputs. Does not generate any
+   * dependencies between the processedModules.
    */
   static JSModule[] createModules(String... inputs) {
     JSModule[] modules = new JSModule[inputs.length];

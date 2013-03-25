@@ -28,7 +28,7 @@ import java.util.Iterator;
 import java.util.logging.Logger;
 
 /**
- * Move prototype methods into later modules.
+ * Move prototype methods into later processedModules.
  *
  * @author nicksantos@google.com (Nick Santos)
  */
@@ -82,7 +82,7 @@ class CrossModuleMethodMotion implements CompilerPass {
   }
 
   public void process(Node externRoot, Node root) {
-    // If there are < 2 modules, then we will never move anything,
+    // If there are < 2 processedModules, then we will never move anything,
     // so we're done.
     if (moduleGraph != null && moduleGraph.getModuleCount() > 1) {
       analyzer.process(externRoot, root);
@@ -122,7 +122,7 @@ class CrossModuleMethodMotion implements CompilerPass {
         }
         Property prop = (Property) symbol;
 
-        // We should only move a property across modules if:
+        // We should only move a property across processedModules if:
         // 1) We can move it deeper in the module graph, and
         // 2) it's a function.
         // 3) it is not a get or a set.

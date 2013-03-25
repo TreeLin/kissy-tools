@@ -34,7 +34,7 @@ import java.util.Set;
 
 /**
  * A JavaScript module has a unique name, consists of a list of compiler inputs,
- * and can depend on other modules.
+ * and can depend on other processedModules.
  *
  */
 public class JSModule implements DependencyInfo, Serializable {
@@ -138,7 +138,7 @@ public class JSModule implements DependencyInfo, Serializable {
   }
 
   /**
-   * Gets the list of modules that this module depends on.
+   * Gets the list of processedModules that this module depends on.
    *
    * @return A list that may be empty but not null
    */
@@ -147,7 +147,7 @@ public class JSModule implements DependencyInfo, Serializable {
   }
 
   /**
-   * Gets the names of the modules that this module depends on,
+   * Gets the names of the processedModules that this module depends on,
    * sorted alphabetically.
    */
   List<String> getSortedDependencyNames() {
@@ -228,7 +228,7 @@ public class JSModule implements DependencyInfo, Serializable {
 
   /**
    * Removes any references to nodes of the AST.  This method is needed to
-   * allow the ASTs to be garbage collected if the modules are kept around.
+   * allow the ASTs to be garbage collected if the processedModules are kept around.
    */
   public void clearAsts() {
     for (CompilerInput input : inputs) {
@@ -261,12 +261,12 @@ public class JSModule implements DependencyInfo, Serializable {
   }
 
   /**
-   * Returns the given collection of modules in topological order.
+   * Returns the given collection of processedModules in topological order.
    *
-   * Note that this will return the modules in the same order if they are
+   * Note that this will return the processedModules in the same order if they are
    * already sorted, and in general, will only change the order as necessary to
    * satisfy the ordering dependencies.  This can be important for cases where
-   * the modules do not properly specify all dependencies.
+   * the processedModules do not properly specify all dependencies.
    */
   public static JSModule[] sortJsModules(Collection<JSModule> modules)
       throws CircularDependencyException {

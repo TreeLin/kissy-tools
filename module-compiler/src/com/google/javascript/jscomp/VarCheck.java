@@ -184,7 +184,7 @@ class VarCheck extends AbstractPostOrderCallback implements CompilerPass {
             t.report(n, VIOLATED_MODULE_DEP_ERROR,
                      currModule.getName(), varModule.getName(), varName);
           } else {
-            // The variable reference is between two modules that have no
+            // The variable reference is between two processedModules that have no
             // dependency relationship. This should probably be considered an
             // error, but just issue a warning for now.
             t.report(n, MISSING_MODULE_DEP_ERROR,

@@ -158,7 +158,7 @@ public enum CompilationLevel {
     options.removeUnusedVars = true;
     options.removeUnusedLocalVars = true;
 
-    // Move code around based on the defined modules.
+    // Move code around based on the defined processedModules.
     options.crossModuleCodeMotion = true;
     options.crossModuleMethodMotion = true;
 

@@ -27,6 +27,7 @@ build example for kissy loader
         <copy encoding="${charset}" todir="${build.dir}">
             <fileset dir="${assets.dir}" includes="**/*"/>
         </copy>
+        <delete file="${build.dir}/deps.js"/>
     </target>
     
     <!--js  combo 地址获取-->
