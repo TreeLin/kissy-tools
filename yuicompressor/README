@@ -1,4 +1,3 @@
-
 YUI Compressor v2.4.2
 
 
@@ -22,6 +21,11 @@ YUI Compressor v2.4.2
 2. css 和 js 文件编码必须是 GB2312, GBK 或 GB18030. 如果要支持 UTF-8, 请在 compressor.cmd 中将 GB18030 替换为 UTF-8
 3. css 文件中含有中文时，如果 css 编码和页面编码不一致，需要手动将中文替换为\xxxx, 详细说明请参考 compressor.cmd 中的说明
 4. 如果不需要 native2ascii, 可以只安装 JRE （需要手动修改下 compressor.cmd）
+
+环境变量设置：
+1、我的电脑–>属性–>高级–>环境变量
+2、系统变量-新建JAVA_HOME，值D:\Program Files\Java\jdk1.7.0_17\，此处应修改为对应JDK安装目录
+3、系统变量-新建或修改已有PATH变量，值最后加上;%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;
 
 Ref: 
 
