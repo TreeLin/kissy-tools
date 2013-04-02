@@ -3,6 +3,7 @@ package com.taobao.f2e;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 /**
  * KISSY Packages config.
@@ -13,6 +14,8 @@ import java.util.HashMap;
 public class Packages {
 
     private static HashMap<String, Module> moduleCache = new HashMap<String, Module>();
+
+    static Pattern trimLastPart = Pattern.compile("[^/]*/$");
 
     /**
      * package encoding
@@ -26,8 +29,29 @@ public class Packages {
             //"d:/code/kissy_git/kissy-tools/module-compiler/test/kissy/"
     };
 
+
+    private String[] packageUrls = {
+            //"d:/code/kissy_git/kissy-tools/module-compiler/test/kissy/biz/"
+    };
+
     public String[] getEncodings() {
         return encodings;
+    }
+
+    public String[] getPackageUrls() {
+        return packageUrls;
+    }
+
+    public void setPackageUrls(String[] packageUrls) {
+        ArrayList<String> re = new ArrayList<String>();
+        for (String base : packageUrls) {
+            base = FileUtils.escapePath(base).trim();
+            if (!base.endsWith("/")) {
+                base += "/";
+            }
+            re.add(base);
+        }
+        this.packageUrls = re.toArray(new String[re.size()]);
     }
 
     public void setEncodings(String[] encodings) {
@@ -57,11 +81,26 @@ public class Packages {
             return m;
         }
         Packages packages = this;
-        String[] baseUrls = packages.getBaseUrls();
-        String[] encodings = packages.getEncodings();
+
         String path = packages.getModuleFullPath(moduleName);
+
+
         String baseUrl = path.replaceFirst("(?i)" + moduleName + ".js$", "");
+
+        String[] baseUrls = packages.getBaseUrls();
+        if (baseUrls.length == 0) {
+            ArrayList<String> tmp = new ArrayList<String>();
+            String[] packageUrls = packages.getPackageUrls();
+            for (String packageUrl : packageUrls) {
+                tmp.add(trimLastPart.matcher(packageUrl).replaceAll(""));
+            }
+            baseUrls = tmp.toArray(new String[tmp.size()]);
+        }
+
         int index = ArrayUtils.indexOf(baseUrls, baseUrl);
+
+        String[] encodings = packages.getEncodings();
+
         if (index == -1 || index >= encodings.length) {
             index = 0;
         }
@@ -99,6 +138,7 @@ public class Packages {
     private String getModuleFullPath(String moduleName) {
         Packages packages = this;
         String r = FileUtils.escapePath(moduleName);
+        String path = null;
         String[] baseUrls = packages.getBaseUrls();
         if (r.charAt(0) == '/') {
             r = r.substring(1);
@@ -106,18 +146,33 @@ public class Packages {
         if (!r.endsWith(".js") && !r.endsWith(".JS")) {
             r += ".js";
         }
-        String path = "";
-        for (String baseUrl : baseUrls) {
-            path = baseUrl + r;
-            if (new File(path).exists()) {
-                break;
+        if (baseUrls.length > 0) {
+            for (String baseUrl : baseUrls) {
+                path = baseUrl + r;
+                if (new File(path).exists()) {
+                    break;
+                }
+            }
+        } else {
+            String[] packageUrls = this.packageUrls;
+            int index = r.indexOf('/');
+            if (index == -1) {
+                return path;
+            }
+            String packageName = r.substring(0, index);
+            for (String packageUrl : packageUrls) {
+                if (packageUrl.endsWith(packageName + '/')) {
+                    path = packageUrl + r.substring(index + 1);
+                    break;
+                }
             }
         }
         return path;
     }
 
     public boolean isModuleExists(String moduleName) {
-        return new File(this.getModuleFullPath(moduleName)).exists();
+        String path = this.getModuleFullPath(moduleName);
+        return path != null && new File(this.getModuleFullPath(moduleName)).exists();
     }
 
 
@@ -133,14 +188,27 @@ public class Packages {
         int packageIndex = -1;
         int finalPackageIndex = -1;
         Module m = null;
-        for (String baseUrl : baseUrls) {
-            packageIndex++;
-            curIndex = path.indexOf(baseUrl, 0);
-            if (curIndex > finalIndex) {
-                finalIndex = curIndex;
-                finalPackageIndex = packageIndex;
-                finalBase = baseUrl;
+        if (baseUrls.length > 0) {
+            for (String baseUrl : baseUrls) {
+                packageIndex++;
+                curIndex = path.indexOf(baseUrl, 0);
+                if (curIndex > finalIndex) {
+                    finalIndex = curIndex;
+                    finalPackageIndex = packageIndex;
+                    finalBase = baseUrl;
+                }
             }
+        } else {
+            for (String packageUrl : packageUrls) {
+                packageIndex++;
+                curIndex = path.indexOf(packageUrl, 0);
+                if (curIndex > finalIndex) {
+                    finalIndex = curIndex;
+                    finalPackageIndex = packageIndex;
+                    finalBase = packageUrl;
+                }
+            }
+            finalBase = trimLastPart.matcher(finalBase).replaceAll("");
         }
         if (finalIndex != -1) {
             name = FileUtils.removeSuffix(path.substring(finalBase.length()));
