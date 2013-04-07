@@ -332,7 +332,7 @@ public class ExtractDependency {
 
         System.out.println("duration: " + (System.currentTimeMillis() - start));
 
-        if (success) {
+        if (!success) {
             System.exit(1);
         }
     }
