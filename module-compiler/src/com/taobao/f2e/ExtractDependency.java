@@ -298,6 +298,7 @@ public class ExtractDependency {
 
     public void run() {
         long start = System.currentTimeMillis();
+        boolean success = true;
         String[] baseUrls = packages.getBaseUrls();
 
         if (baseUrls.length == 0) {
@@ -309,7 +310,7 @@ public class ExtractDependency {
                     new String[]{"js"}, true);
 
             for (File f : files) {
-                processSingle(f.getPath());
+                success = processSingle(f.getPath()) && success;
             }
         }
 
@@ -330,6 +331,10 @@ public class ExtractDependency {
         }
 
         System.out.println("duration: " + (System.currentTimeMillis() - start));
+
+        if (success) {
+            System.exit(1);
+        }
     }
 
     public static void main(String[] args) throws Exception {
